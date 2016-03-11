@@ -35,10 +35,6 @@ def send_request(url):
 
 
 if __name__ == '__main__':
-
-    # send_request(
-    #     'http://173.168.100.144/checklogin.jsp?username=%B3%C2%D6%BE%B7%E5&password=000000&Submit2=%C8%B7%C8%CF%B5%C7%C2%BC')
-
     dict = param_parser('config')
     for usr, pwd in dict.items():
         url = url_builder(usr, pwd)
@@ -51,4 +47,3 @@ if __name__ == '__main__':
         else:
             if status == (200, 200, 200):
                 print('%s 签到成功！' % usr)
-
