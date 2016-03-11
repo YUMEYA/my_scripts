@@ -1,6 +1,7 @@
 from urllib import request, parse
 from urllib.error import HTTPError, URLError
 from http import cookiejar
+from os import system
 
 
 def param_parser(file):
@@ -47,3 +48,5 @@ if __name__ == '__main__':
         else:
             if status == (200, 200, 200):
                 print('%s 签到成功！' % usr)
+
+    system('pause')
