@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from urllib import request, parse
 from urllib.error import HTTPError, URLError
 from http import cookiejar
