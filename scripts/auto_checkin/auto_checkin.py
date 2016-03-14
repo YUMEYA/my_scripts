@@ -5,7 +5,6 @@ from os import system
 
 
 def param_parser(file):
-    line = []
     dict = {}
     with open(file, encoding='UTF-8', mode='r') as f:
         for l in f.readlines():
@@ -29,10 +28,12 @@ def send_request(url):
     status1 = r.status
     r = opener.open(url)
     status2 = r.status
-    r = opener.open('http://173.168.100.144/index.jsp')
+    r = opener.open('http://173.168.100.144/attendance/checkin.jsp')
     status3 = r.status
+    r = opener.open('http://173.168.100.144/index.jsp')
+    status4 = r.status
     opener.close()
-    return status1, status2, status3
+    return status1, status2, status3, status4
 
 
 if __name__ == '__main__':
@@ -46,7 +47,7 @@ if __name__ == '__main__':
         except URLError as e:
             print('%s 签到失败！ 原因：网络连接错误。' % (usr))
         else:
-            if status == (200, 200, 200):
+            if status == (200, 200, 200, 200):
                 print('%s 签到成功！' % usr)
 
     system('pause')
