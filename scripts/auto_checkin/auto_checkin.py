@@ -5,6 +5,11 @@ from os import system
 
 
 def param_parser(file):
+    '''
+    Read username and password from config file.
+    Return a dictionary which is just like:{username:password}
+
+    '''
     dict = {}
     with open(file, encoding='UTF-8', mode='r') as f:
         for l in f.readlines():
@@ -14,6 +19,10 @@ def param_parser(file):
 
 
 def url_builder(username, password):
+    '''
+    Build url using parameters username and password.
+
+    '''
     u = parse.quote(username.encode('GBK'))
     p = password
     s = parse.quote('确认登录'.encode('GBK'))
@@ -22,16 +31,27 @@ def url_builder(username, password):
 
 
 def send_request(url):
+    """
+    Build an opener with cookie support.
+    Due to I don't know how to handle redirection responses, I just simply open several urls with one single
+    opener as well as cookie it storage, and determine if those requests were correctly responsed by status code,
+    then finally close it to release session.
+
+    """
+    # build opener
     cj = cookiejar.CookieJar()
     opener = request.build_opener(request.HTTPCookieProcessor(cj))
+    # open homepage with opener and catch cookie
     r = opener.open('http://173.168.100.144/login.jsp')
     status1 = r.status
+    # send login request with the opener containing cookie
     r = opener.open(url)
     status2 = r.status
     r = opener.open('http://173.168.100.144/attendance/checkin.jsp')
     status3 = r.status
     r = opener.open('http://173.168.100.144/index.jsp')
     status4 = r.status
+    # close opener
     opener.close()
     return status1, status2, status3, status4
 
