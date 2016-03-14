@@ -37,17 +37,21 @@ def send_request(url):
 
 
 if __name__ == '__main__':
-    dict = param_parser('config')
-    for usr, pwd in dict.items():
-        url = url_builder(usr, pwd)
-        try:
-            status = send_request(url)
-        except HTTPError as e:
-            print('%s 签到失败！ 原因：用户名或密码错误。' % (usr))
-        except URLError as e:
-            print('%s 签到失败！ 原因：网络连接错误。' % (usr))
-        else:
-            if status == (200, 200, 200, 200):
-                print('%s 签到成功！' % usr)
-
-    system('pause')
+    try:
+        dict = param_parser('config')
+    except FileNotFoundError as e:
+        print('config文件未找到！')
+    else:
+        for usr, pwd in dict.items():
+            url = url_builder(usr, pwd)
+            try:
+                status = send_request(url)
+            except HTTPError as e:
+                print('%s 签到失败！ 原因：用户名或密码错误。' % (usr))
+            except URLError as e:
+                print('%s 签到失败！ 原因：网络连接错误。' % (usr))
+            else:
+                if status == (200, 200, 200, 200):
+                    print('%s 签到成功！' % usr)
+    finally:
+        system('pause')
