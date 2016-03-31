@@ -75,5 +75,7 @@ if __name__ == '__main__':
             else:
                 if status == (200, 200, 200, 200):
                     print('%s 签到成功！' % usr)
+                else:
+                    print('签到失败！', status)
     finally:
         system('pause')
