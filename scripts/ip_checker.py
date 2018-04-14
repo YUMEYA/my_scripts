@@ -25,6 +25,7 @@ def gen_ip_table():
         list.append('10.2.24.' + str(i))
     return list
 
+
 if __name__ == '__main__':
     print('processing...')
 
