@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
-
 from urllib import request, parse
 from urllib.error import HTTPError, URLError
 from http import cookiejar
 from os import system
+from time import sleep
+from datetime import datetime
+from random import randint
 
 
 def param_parser(file):
@@ -66,14 +67,22 @@ if __name__ == '__main__':
     else:
         for usr, pwd in dict.items():
             url = url_builder(usr, pwd)
+            print('%s 正在签到......' % usr)
             try:
                 status = send_request(url)
             except HTTPError as e:
-                print('%s 签到失败！ 原因：用户名或密码错误。' % (usr))
+                print('%s 签到失败！ 原因：用户名或密码错误。' % usr)
             except URLError as e:
-                print('%s 签到失败！ 原因：网络连接错误。' % (usr))
+                print('%s 签到失败！ 原因：网络连接错误。' % usr)
             else:
                 if status == (200, 200, 200, 200):
-                    print('%s 签到成功！' % usr)
+                    time = datetime.now().strftime('%H:%M:%S')
+                    print('%s 签到成功！签到时间：%s' % (usr, time))
+                else:
+                    print('%s 签到失败！' % usr, status)
+                s = randint(1, 10)
+                print('休息 %d 秒......' % s)
+                sleep(s)
+
     finally:
         system('pause')
